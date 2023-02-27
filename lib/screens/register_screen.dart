@@ -1,37 +1,113 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'dart:io';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-//nombre, correo, avatar
+import 'package:flutter/services.dart';
+import 'package:flutter_demo/screens/select_photo_options_screen.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  static const id = 'set_photo_screen';
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  File? _image;
+
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  Future _pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      File? img = File(image.path);
+      setState(() {
+        _image = img;
+        Navigator.of(context).pop();
+      });
+    } on PlatformException catch (e) {
+      print(e);
+      Navigator.of(context).pop();
+    }
+  }
+
+  void _showSelectPhotoOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          initialChildSize: 0.28,
+          maxChildSize: 0.4,
+          minChildSize: 0.28,
+          expand: false,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: SelectPhotoOptionsScreen(
+                onTap: _pickImage,
+              ),
+            );
+          }),
+    );
+  }
+
+  bool checkTextFields() {
+    if (userNameController.text.trim() != '' &&
+        EmailValidator.validate(emailController.text) &&
+        passwordController.text.trim() != '') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final btnUserAvatar = CircularProfileAvatar(
-      'https://avatars0.githubusercontent.com/u/8264639?s=460&v=4',
-      radius: 100,
-      backgroundColor: Colors.transparent,
-      borderWidth: 10,
-      borderColor: Colors.green,
-      elevation: 5.0,
-      onTap: () {
-        print('adil');
-      },
-    );
-
     final txtNombre = TextFormField(
+      controller: userNameController,
       decoration: const InputDecoration(
           label: Text('Name'), enabledBorder: OutlineInputBorder()),
     );
 
     final txtCorreo = TextFormField(
+      controller: emailController,
       decoration: const InputDecoration(
           label: Text('Email'), enabledBorder: OutlineInputBorder()),
+    );
+
+    final txtPass = TextFormField(
+      controller: passwordController,
+      obscureText: true,
+      decoration: const InputDecoration(
+          label: Text('Password User'), enabledBorder: OutlineInputBorder()),
+    );
+
+    final txtRegister = Padding(
+      padding: const EdgeInsets.all(20),
+      child: TextButton(
+        onPressed: () {
+          if (checkTextFields()) {
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Ingrese valores validos :)')));
+          }
+        },
+        child: const Text('Registrarse',
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontSize: 25,
+                color: Color.fromARGB(255, 40, 60, 100))),
+      ),
     );
 
     final spaceHorizontal = SizedBox(
@@ -43,31 +119,57 @@ class _RegisterScreenState extends State<RegisterScreen> {
         constraints: BoxConstraints.expand(),
         decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('fondo.png'),
+                image: AssetImage('assets/fondo.png'),
                 fit: BoxFit.cover,
-                opacity: 0.5)),
+                opacity: 0.2)),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  btnUserAvatar,
-                  spaceHorizontal,
+                  Padding(
+                    padding: const EdgeInsets.all(28.0),
+                    child: Center(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          _showSelectPhotoOptions(context);
+                        },
+                        child: Center(
+                          child: Container(
+                              height: 130.0,
+                              width: 130.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey.shade200,
+                              ),
+                              child: Center(
+                                child: _image == null
+                                    ? const Text(
+                                        'No image selected',
+                                        style: TextStyle(fontSize: 20),
+                                        textAlign: TextAlign.center,
+                                      )
+                                    : CircleAvatar(
+                                        backgroundImage: FileImage(_image!),
+                                        radius: 200.0,
+                                      ),
+                              )),
+                        ),
+                      ),
+                    ),
+                  ),
                   txtNombre,
                   spaceHorizontal,
                   txtCorreo,
+                  spaceHorizontal,
+                  txtPass,
+                  txtRegister
                 ],
               ),
-              Positioned(
-                top: 50,
-                child: Image.asset(
-                  'assets/itcelaya_logo.png',
-                  height: 150,
-                ),
-              )
             ],
           ),
         ),

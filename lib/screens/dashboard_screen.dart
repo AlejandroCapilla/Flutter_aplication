@@ -2,7 +2,6 @@ import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/settings/styles.dart';
 import 'package:provider/provider.dart';
-
 import '../provider/theme_provider.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -37,8 +36,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 isDarkModeEnabled: isDarkThemeEnable,
                 onStateChanged: ((isDarkModeEnabled) {
                   isDarkModeEnabled
-                      ? theme.setThemeData(StylesApp.lightTheme())
-                      : theme.setThemeData(StylesApp.darkTheme());
+                      ? theme.setThemeData(StylesApp.lightTheme(context))
+                      : theme.setThemeData(StylesApp.darkTheme(context));
 
                   isDarkThemeEnable = isDarkModeEnabled;
                   setState(() {});

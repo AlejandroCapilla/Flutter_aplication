@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => ThemeProvider(), child: PMSNApp());
+        create: (context) => ThemeProvider(context), child: PMSNApp());
   }
 }
 

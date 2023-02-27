@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/settings/styles.dart';
 
 class ThemeProvider with ChangeNotifier {
-  ThemeData? _themeData = StylesApp.darkTheme();
+  ThemeProvider(BuildContext context) {
+    _themeData = StylesApp.darkTheme(context);
+  }
+
+  ThemeData? _themeData;
 
   getThemeData() => _themeData;
 

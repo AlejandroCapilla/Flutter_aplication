@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
             constraints: BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('fondo.png'),
+                    image: AssetImage('assets/fondo.png'),
                     fit: BoxFit.cover,
                     opacity: 0.5)),
             child: Padding(
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 alignment: Alignment.topCenter,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       txtEmail,
                       spaceHorizontal,
@@ -89,10 +89,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   Positioned(
-                    top: 50,
+                    top: 40,
                     child: Image.asset(
                       'assets/itcelaya_logo.png',
-                      height: 150,
+                      height: 200,
                     ),
                   )
                 ],
