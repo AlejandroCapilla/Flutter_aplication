@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/database/database_helper.dart';
 
 import '../models/post_model.dart';
+import '../widgets/item_post_widget.dart';
 
 class ListPostScreen extends StatefulWidget {
   const ListPostScreen({super.key});
@@ -29,9 +30,7 @@ class _ListPostScreenState extends State<ListPostScreen> {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               var objPostModel = snapshot.data![index];
-              return Center(
-                child: Text('Somethhing was wrong'),
-              );
+              return ItemPostWidget(postModel: objPostModel);
             },
           );
         } else if (snapshot.hasError) {
