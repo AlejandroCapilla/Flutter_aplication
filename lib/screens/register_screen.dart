@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_demo/firebase/email_auth.dart';
 import 'package:flutter_demo/screens/select_photo_options_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -16,6 +17,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   File? _image;
+
+  EmailAuth emailAuth = EmailAuth();
 
   TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -97,6 +100,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: TextButton(
         onPressed: () {
           if (checkTextFields()) {
+            emailAuth.createUserWithEmailAndPassword(
+                email: emailController.text, password: passwordController.text);
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Ingrese valores validos :)')));

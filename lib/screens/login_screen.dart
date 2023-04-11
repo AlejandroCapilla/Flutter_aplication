@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/provider/theme_provider.dart';
+import 'package:flutter_demo/settings/styles.dart';
 import 'package:flutter_demo/widgets/loading_modal_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import '../responsive.dart';
 

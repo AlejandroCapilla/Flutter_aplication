@@ -1,9 +1,13 @@
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/screens/list_post_cloud_screen.dart';
 import 'package:flutter_demo/screens/list_post_screen.dart';
 import 'package:flutter_demo/settings/styles.dart';
+import 'package:flutter_demo/widgets/futures_modal.dart';
 import 'package:provider/provider.dart';
+import '../provider/flags_provider.dart';
 import '../provider/theme_provider.dart';
+import '../widgets/modal_add_post.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -18,14 +22,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeProvider theme = Provider.of<ThemeProvider>(context);
+    FlagsProvider flags = Provider.of<FlagsProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Lince Sacial :)'),
       ),
-      body: const ListPostScreen(),
+      // body: const ListPostScreen() == true
+      //     ? const ListPostScreen()
+      //     : ListPostScreen(),
+      body: ListPostCloudScreen(),
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () => openCustomeDialog(context, null),
           icon: const Icon(Icons.add),
           label: Text('Post it')),
       drawer: Drawer(
@@ -38,24 +46,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 accountName: Text('Alejandro Capilla'),
                 accountEmail: Text('19031028@itcelaya.edu.mx')),
-            DayNightSwitcher(
-                isDarkModeEnabled: isDarkThemeEnable,
-                onStateChanged: ((isDarkModeEnabled) {
-                  isDarkModeEnabled
-                      ? theme.setThemeData(StylesApp.lightTheme(context))
-                      : theme.setThemeData(StylesApp.darkTheme(context));
-
-                  isDarkThemeEnable = isDarkModeEnabled;
-                  setState(() {});
-                }))
+            ListTile(
+              onTap: () => Navigator.pushNamed(context, '/popular'),
+              title: const Text('API Movies'),
+              leading: const Icon(Icons.movie),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+            IconButton(
+                onPressed: () => Navigator.pushNamed(context, '/settings'),
+                icon: const Icon(Icons.settings))
           ],
         ),
       ),
     );
-
-    // _openCustomeDialog() {
-    //   return showGeneralDialog(context: Context, barrierColor: Colors.black.withOpacity(.5),
-    //   transitionBuilder)
-    // }
   }
 }
