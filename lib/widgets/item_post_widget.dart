@@ -58,7 +58,7 @@ class ItemPostWidget extends StatelessWidget {
           onSelected: (value) {
             switch (value) {
               case 0:
-                openCustomeDialog(context, postModel);
+                openCustomePostDialog(context, postModel);
                 break;
               case 1:
                 _showDeleteModal(context);

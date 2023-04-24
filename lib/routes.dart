@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screens/concentric_transition.dart';
 import 'package:flutter_demo/screens/dashboard_screen.dart';
+import 'package:flutter_demo/screens/events_screen.dart';
 import 'package:flutter_demo/screens/login_screen.dart';
 import 'package:flutter_demo/screens/popular_movies_screen.dart';
 import 'package:flutter_demo/screens/register_screen.dart';
@@ -14,5 +15,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/concentric': (BuildContext context) => ConcentricTrasition(),
     '/login': (BuildContext context) => const LoginScreen(),
     '/settings': (BuildContext context) => const SettingsScreen(),
+    '/events': (BuildContext context) => const EventsScreen(),
   };
 }

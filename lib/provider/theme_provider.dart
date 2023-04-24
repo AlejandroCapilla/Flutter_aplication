@@ -3,7 +3,6 @@ import 'package:flutter_demo/settings/styles.dart';
 
 class ThemeProvider with ChangeNotifier {
   ThemeProvider(BuildContext context, String theme) {
-    // _themeData = StylesApp.darkTheme(context);
     if (theme == 'oscuro') {
       _themeData = StylesApp.darkTheme(context);
     } else if (theme == 'claro') {

@@ -33,9 +33,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       //     : ListPostScreen(),
       body: ListPostCloudScreen(),
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => openCustomeDialog(context, null),
+          onPressed: () => openCustomePostDialog(context, null),
           icon: const Icon(Icons.add),
-          label: Text('Post it')),
+          label: const Text('Post it')),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -54,7 +54,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             IconButton(
                 onPressed: () => Navigator.pushNamed(context, '/settings'),
-                icon: const Icon(Icons.settings))
+                icon: const Icon(Icons.settings)),
+            IconButton(
+                onPressed: () => Navigator.pushNamed(context, '/events'),
+                icon: const Icon(Icons.event))
           ],
         ),
       ),

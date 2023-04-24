@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/database/database_helper.dart';
 import 'package:flutter_demo/models/post_model.dart';
 import 'package:provider/provider.dart';
-
 import '../provider/flags_provider.dart';
 
 class ModalAddPost extends StatefulWidget {
