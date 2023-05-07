@@ -71,15 +71,14 @@ class _EventsScreenState extends State<EventsScreen> {
               future: database!.GETALLEVENTS(),
               builder: ((context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  // return TableCalendar(
-                  //   firstDay: DateTime.utc(2010, 10, 16),
-                  //   lastDay: DateTime.utc(2030, 3, 14),
-                  //   focusedDay: DateTime.now(),
-                  //   selectedDayPredicate: (DateTime date) {
-                  //     return isSameDay(selectedDay, date);
-                  //   },
-                  // );
-                  return const Center(child: CircularProgressIndicator());
+                  return TableCalendar(
+                    firstDay: DateTime.utc(2010, 10, 16),
+                    lastDay: DateTime.utc(2030, 3, 14),
+                    focusedDay: DateTime.now(),
+                    selectedDayPredicate: (DateTime date) {
+                      return isSameDay(selectedDay, date);
+                    },
+                  );
                 } else if (snapshot.hasData) {
                   selectedEvents = {};
                   for (var evento in snapshot.data!) {

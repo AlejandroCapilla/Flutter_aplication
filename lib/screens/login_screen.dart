@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/firebase/auth_service.dart';
 import 'package:flutter_demo/provider/theme_provider.dart';
 import 'package:flutter_demo/settings/styles.dart';
 import 'package:flutter_demo/widgets/loading_modal_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
+import 'package:uni_links/uni_links.dart';
 import '../responsive.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,7 +18,37 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late StreamSubscription _subs;
+  final AuthService authService = AuthService();
   bool isLoading = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _initDeepLinkListener();
+    super.initState();
+  }
+
+  void _initDeepLinkListener() async {
+    _subs = getLinksStream().listen(
+        (String link) {
+          _checkDeepLink(link);
+        } as void Function(String? event)?,
+        cancelOnError: true);
+  }
+
+  void _checkDeepLink(String link) {
+    if (link != null) {
+      String code = link.substring(link.indexOf(RegExp('code=')) + 5);
+      authService.loginWithGithub(code).then((firebaseUser) {
+        print(firebaseUser.email);
+        print(firebaseUser.photoURL);
+        print("LOGGED IN AS: ${firebaseUser.displayName}");
+      }).catchError((e) {
+        print("LOGIN ERROR: " + e.toString());
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +83,16 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
     final btnGoogle = SocialLoginButton(
-        buttonType: SocialLoginButtonType.google, onPressed: () {});
+        buttonType: SocialLoginButtonType.google,
+        onPressed: () {
+          AuthService().googleLogin();
+        });
 
     final btnFacebook = SocialLoginButton(
-        buttonType: SocialLoginButtonType.facebook, onPressed: () {});
+        buttonType: SocialLoginButtonType.github,
+        onPressed: () {
+          AuthService().githubLogin();
+        });
 
     final txtRegister = Padding(
       padding: const EdgeInsets.all(20),

@@ -1,4 +1,5 @@
 import 'package:day_night_switcher/day_night_switcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screens/list_post_cloud_screen.dart';
 import 'package:flutter_demo/screens/list_post_screen.dart';
@@ -23,6 +24,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     ThemeProvider theme = Provider.of<ThemeProvider>(context);
     FlagsProvider flags = Provider.of<FlagsProvider>(context);
+    final user = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(
       appBar: AppBar(
@@ -41,11 +43,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           children: [
             UserAccountsDrawerHeader(
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://i.ytimg.com/vi/-LmKCdYhrjg/maxresdefault.jpg'),
+                  backgroundImage: NetworkImage(user.photoURL!),
                 ),
-                accountName: Text('Alejandro Capilla'),
-                accountEmail: Text('19031028@itcelaya.edu.mx')),
+                accountName: Text(user.displayName!),
+                accountEmail: Text(user.email!)),
             ListTile(
               onTap: () => Navigator.pushNamed(context, '/popular'),
               title: const Text('API Movies'),
@@ -57,7 +58,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 icon: const Icon(Icons.settings)),
             IconButton(
                 onPressed: () => Navigator.pushNamed(context, '/events'),
-                icon: const Icon(Icons.event))
+                icon: const Icon(Icons.event)),
+            IconButton(
+                onPressed: () => Navigator.pushNamed(context, '/about'),
+                icon: const Icon(Icons.map)),
           ],
         ),
       ),

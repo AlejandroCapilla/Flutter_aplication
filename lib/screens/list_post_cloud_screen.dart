@@ -11,12 +11,12 @@ class ListPostCloudScreen extends StatefulWidget {
 }
 
 class _ListPostCloudScreenState extends State<ListPostCloudScreen> {
-  PostColleciton? postColleciton;
+  PostCollection? postColleciton;
 
   @override
   void initState() {
     super.initState();
-    postColleciton = PostColleciton();
+    postColleciton = PostCollection();
   }
 
   @override
@@ -28,16 +28,17 @@ class _ListPostCloudScreenState extends State<ListPostCloudScreen> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
+              final idPost = snapshot.data!.docs[index].id;
               final dscPost = snapshot.data!.docs[index].get('dscPost');
               final datePost = snapshot.data!.docs[index].get('datePost');
               return ItemPostWidget(
                 postModel:
-                    PostModel(dscPost: dscPost, datePost: datePost.toString()),
+                    PostModel(idPost: idPost, dscPost: dscPost, datePost: datePost.toString()),
               );
             },
           );
-          //} else if (No se que iba aqui alv){
-          //return Center(child: Text('Algo salio mal! :c'))
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Algo salio mal! :c'));
         } else {
           return const CircularProgressIndicator();
         }

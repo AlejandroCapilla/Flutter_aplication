@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_demo/models/post_model.dart';
 
-class PostColleciton {
+class PostCollection {
   late FirebaseFirestore? _firestore;
   CollectionReference? _postCollection;
 

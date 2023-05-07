@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/database/database_helper.dart';
+import 'package:flutter_demo/firebase/post_collection.dart';
 import 'package:flutter_demo/widgets/futures_modal.dart';
 import 'package:provider/provider.dart';
 import '../models/post_model.dart';
@@ -12,6 +13,7 @@ class ItemPostWidget extends StatelessWidget {
   PostModel? postModel;
   FlagsProvider? flags;
 
+  PostCollection? postCollection = PostCollection();
   @override
   Widget build(BuildContext context) {
     flags = Provider.of<FlagsProvider>(context);
@@ -107,7 +109,8 @@ class ItemPostWidget extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {
-                  _database.ELIMINAR('tblPost', postModel!.idPost!);
+                  postCollection!.deletePost(postModel!.idPost!);
+                  //_database.ELIMINAR('tblPost', postModel!.idPost!);
                   Navigator.pop(context);
                   flags!.setupdatePosts();
                 },

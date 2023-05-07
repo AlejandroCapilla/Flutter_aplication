@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/firebase/auth_service.dart';
 import 'package:flutter_demo/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:social_login_buttons/social_login_buttons.dart';
 import '../settings/styles.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -24,6 +26,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('theme', theme);
     }
+
+    final btnLogout = ElevatedButton(
+      onPressed: () {
+        AuthService().logout();
+        Navigator.pop(context);
+      },
+      child: const Text('         Logout         '),
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -60,6 +70,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     }).toList(),
                   )
                 ],
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: btnLogout,
+                ),
               )
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/database/database_helper.dart';
+import 'package:flutter_demo/firebase/post_collection.dart';
 import 'package:flutter_demo/models/post_model.dart';
 import 'package:provider/provider.dart';
 import '../provider/flags_provider.dart';
@@ -16,12 +17,14 @@ class ModalAddPost extends StatefulWidget {
 class _ModalAddPostState extends State<ModalAddPost> {
   DatabaseHelper? database;
   TextEditingController txtDescPost = TextEditingController();
+  PostCollection? postCollection;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     database = DatabaseHelper();
+    postCollection = PostCollection();
     txtDescPost.text =
         widget.postModel != null ? widget.postModel!.datePost! : '';
   }
@@ -45,33 +48,59 @@ class _ModalAddPostState extends State<ModalAddPost> {
             IconButton(
                 onPressed: () {
                   if (widget.postModel == null) {
-                    database!.INSERTAR('tblPost', {
-                      'dscPost': txtDescPost.text,
-                      'datePost': DateTime.now().toString()
-                    }).then((value) {
-                      var msg =
-                          value > 0 ? 'Registro insertado' : 'Ocurrio un error';
+                    postCollection!
+                        .insertPost(PostModel(
+                            dscPost: txtDescPost.text,
+                            datePost: DateTime.now().toString()))
+                        .then((value) {
+                      var msg = 'Registro insertado';
 
                       final snackBar = SnackBar(content: Text(msg));
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       flags.setupdatePosts();
                     });
+                    // database!.INSERTAR('tblPost', {
+                    //   'dscPost': txtDescPost.text,
+                    //   'datePost': DateTime.now().toString()
+                    // }).then((value) {
+                    //   var msg =
+                    //       value > 0 ? 'Registro insertado' : 'Ocurrio un error';
+
+                    //   final snackBar = SnackBar(content: Text(msg));
+                    //   Navigator.pop(context);
+                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    //   flags.setupdatePosts();
+                    // });
                   } else {
-                    database!.ACTUALIZAR('tblPost', {
-                      'idPost': widget.postModel!.idPost,
-                      'dscPost': txtDescPost.text,
-                      'datePost': DateTime.now().toString()
-                    }).then((value) {
-                      var msg = value > 0
-                          ? 'Registro actualizado'
-                          : 'Ocurrio un error';
+                    postCollection!
+                        .updatePost(
+                            PostModel(
+                                dscPost: txtDescPost.text,
+                                datePost: DateTime.now().toString()),
+                            widget.postModel!.idPost.toString())
+                        .then((value) {
+                      var msg = 'Registro insertado';
 
                       final snackBar = SnackBar(content: Text(msg));
                       Navigator.pop(context);
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       flags.setupdatePosts();
                     });
+                    // database!.ACTUALIZAR('tblPost', {
+                    //   'idPost': widget.postModel!.idPost,
+                    //   'dscPost': txtDescPost.text,
+                    //   'datePost': DateTime.now().toString()
+                    // }).then((value) {
+                    //   var msg = value > 0
+                    //       ? 'Registro actualizado'
+                    //       : 'Ocurrio un error';
+
+                    //   final snackBar = SnackBar(content: Text(msg));
+                    //   Navigator.pop(context);
+                    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    //   flags.setupdatePosts();
+                    // });
                   }
                 },
                 icon: Icon(Icons.send))

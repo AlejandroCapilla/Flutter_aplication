@@ -43,7 +43,7 @@ class ConcentricTrasition extends StatelessWidget {
           return CardInfo(data: data[index]);
         },
         onFinish: () {
-          Navigator.pushNamed(context, '/login');
+          Navigator.pushNamed(context, '/home');
         },
       ),
     );
