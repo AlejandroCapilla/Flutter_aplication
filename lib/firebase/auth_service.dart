@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/models/github_login_request.dart';
@@ -32,7 +31,7 @@ class AuthService extends ChangeNotifier {
   }
 
   Future logout() async {
-    await googleSignIn.disconnect();
+    googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
   }
 
@@ -42,8 +41,8 @@ class AuthService extends ChangeNotifier {
         SecretKey.GITHUB_CLIENT_ID +
         "&scope=public_repo%20read:user%20user:email";
 
-    // ignore: deprecated_member_use
     if (await canLaunch(url)) {
+      print("login: Se lanzo el link");
       // ignore: deprecated_member_use
       await launch(
         url,
@@ -51,17 +50,17 @@ class AuthService extends ChangeNotifier {
         forceWebView: false,
       );
     } else {
-      print("CANNOT LAUNCH THIS URL!");
+      print("login: CANNOT LAUNCH THIS URL!");
     }
   }
 
   //Para Github
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  //final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<User> loginWithGithub(String code) async {
     //Acces token request
     final response = await http.post(
-      "https://github.com/login/oauth/access_token" as Uri,
+      Uri.parse("https://github.com/login/oauth/access_token"),
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
@@ -78,7 +77,7 @@ class AuthService extends ChangeNotifier {
         GithubAuthProvider.credential(loginResponse.accessToken);
 
     final User user =
-        (await _firebaseAuth.signInWithCredential(credential)).user!;
+        (await FirebaseAuth.instance.signInWithCredential(credential)).user!;
     return user;
   }
 }

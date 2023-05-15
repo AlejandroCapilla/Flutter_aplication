@@ -28,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lince Sacial :)'),
+        title: Text('Lince Social :)'),
       ),
       // body: const ListPostScreen() == true
       //     ? const ListPostScreen()

@@ -18,7 +18,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late StreamSubscription _subs;
+  late StreamSubscription? _subs;
   final AuthService authService = AuthService();
   bool isLoading = false;
 
@@ -29,24 +29,48 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _disposeDeepLinkListener();
+    super.dispose();
+  }
+
+  // void _initDeepLinkListener() async {
+  //   print("login: Se inicio el listener para el link");
+  //   _subs = linkStream.listen(
+  //     (String link) {
+  //       print("login: Se recivio link");
+  //       _checkDeepLink(link);
+  //     } as void Function(String? event)?,
+  //     //cancelOnError: true);
+  //   );
+  // }
+
   void _initDeepLinkListener() async {
-    _subs = getLinksStream().listen(
-        (String link) {
-          _checkDeepLink(link);
-        } as void Function(String? event)?,
-        cancelOnError: true);
+    _subs = linkStream.listen((link) {
+      _checkDeepLink(link!.toString());
+    }, cancelOnError: true);
   }
 
   void _checkDeepLink(String link) {
     if (link != null) {
       String code = link.substring(link.indexOf(RegExp('code=')) + 5);
+      print("login: code =$code");
       authService.loginWithGithub(code).then((firebaseUser) {
         print(firebaseUser.email);
         print(firebaseUser.photoURL);
         print("LOGGED IN AS: ${firebaseUser.displayName}");
       }).catchError((e) {
-        print("LOGIN ERROR: " + e.toString());
+        print("login: ERROR: " + e.toString());
       });
+    }
+  }
+
+  void _disposeDeepLinkListener() {
+    if (_subs != null) {
+      _subs!.cancel();
+      _subs = null;
     }
   }
 
