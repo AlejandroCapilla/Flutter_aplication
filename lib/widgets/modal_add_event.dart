@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/database/database_helper.dart';
+import 'package:flutter_demo/database/events_database_helper.dart';
 import 'package:flutter_demo/models/events_model.dart';
 import 'package:provider/provider.dart';
 import '../provider/flags_provider.dart';
@@ -14,13 +15,13 @@ class ModalAddEvent extends StatefulWidget {
 }
 
 class _ModalAddEventState extends State<ModalAddEvent> {
-  DatabaseHelper? database;
+  EventsDatabaseHelper? database;
   TextEditingController txtDescEvent = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    database = DatabaseHelper();
+    database = EventsDatabaseHelper();
   }
 
   @override
@@ -43,7 +44,7 @@ class _ModalAddEventState extends State<ModalAddEvent> {
                   database!.INSERTAR('tblEvento', {
                     'dscEvento': txtDescEvent.text,
                     'fechaEvento': widget.day!.toIso8601String(),
-                    'completado': false
+                    'completado': 0
                   });
                   Navigator.pop(context);
                   setState(() {});

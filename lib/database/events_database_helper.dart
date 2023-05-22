@@ -26,12 +26,14 @@ class EventsDatabaseHelper {
   }
 
   _createTable(Database db, int version) async {
+    print("Events: Metodo _createTable ejecutado");
     String query =
         "CREATE TABLE tblEvento (idEvento INTEGER PRIMARY KEY, dscEvento VARCHAR(200), fechaEvento DATE, completado BOOLEAN)";
     await db.execute(query);
   }
 
   Future<int> INSERTAR(String table, Map<String, dynamic> map) async {
+    print("Events: Metodo INSERTAR ejecutado");
     var conexion = await database;
     return await conexion.insert(table, map);
   }
@@ -44,6 +46,7 @@ class EventsDatabaseHelper {
   Future<List<EventModel>> GETALLEVENTS() async {
     var conexion = await database;
     var result = await conexion.query('tblEvento');
+    print("Events: Metodo GETALLEVENTS ejecutado");
     return result.map((evento) => EventModel.fromMap(evento)).toList();
   }
 

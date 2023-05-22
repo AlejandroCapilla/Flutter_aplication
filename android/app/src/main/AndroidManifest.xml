@@ -32,7 +32,7 @@
             
                 <data
                     android:scheme="https"
-                    android:host="pmysn2023.firebaseapp.com" />
+                    android:host="pmysn2023.firebaseapp.comque" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

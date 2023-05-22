@@ -129,41 +129,42 @@ class _EventsScreenState extends State<EventsScreen> {
                           TextStyle? textStyle;
                           if (events.isNotEmpty) {
                             int difDias =
-                                date.difference(DateTime.now().toUtc()).inDays;
+                                date.difference(DateTime.now().toUtc()).inDays +
+                                    1;
                             EventModel event = events[0] as EventModel;
                             bool? completado = event.completado;
                             if (difDias == 0) {
                               decoration = const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Color.fromARGB(255, 163, 255, 166),
+                                color: Color.fromARGB(255, 90, 255, 95),
                               );
                               textStyle = const TextStyle(
                                   color: Color.fromARGB(255, 0, 0, 0));
                             } else if (difDias < 0 && completado) {
                               decoration = const BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                color: Color.fromARGB(255, 163, 255, 166),
+                                shape: BoxShape.circle,
+                                color: Color.fromARGB(255, 90, 255, 95),
                               );
                               textStyle = const TextStyle(
                                   color: Color.fromARGB(255, 0, 0, 0));
                             } else if (difDias < 0 && !completado) {
                               decoration = const BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                color: Color.fromARGB(255, 255, 43, 43),
+                                shape: BoxShape.circle,
+                                color: Color.fromARGB(223, 255, 33, 33),
                               );
                               textStyle = const TextStyle(
                                   color: Color.fromARGB(255, 0, 0, 0));
-                            } else if (difDias == 1 || difDias == 2) {
+                            } else if (difDias == 1) {
                               decoration = const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Color.fromARGB(255, 250, 241, 161),
+                                color: Color.fromARGB(255, 250, 233, 81),
                               );
                               textStyle = const TextStyle(
                                   color: Color.fromARGB(255, 0, 0, 0));
                             } else if (events.isNotEmpty) {
                               decoration = const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Color.fromARGB(255, 158, 252, 255),
+                                color: Color.fromARGB(255, 59, 176, 255),
                               );
                               textStyle = const TextStyle(color: Colors.black);
                             }
