@@ -38,6 +38,12 @@ class EventsDatabaseHelper {
     return await conexion.insert(table, map);
   }
 
+  Future<int> ACTUALIZAR(String table, Map<String, dynamic> map) async {
+    var conexion = await database;
+    return await conexion.update(table, map,
+        where: 'idEvento = ?', whereArgs: map[map['idEvento']]);
+  }
+
   Future<int> ELIMINAR(String table, int id) async {
     var conexion = await database;
     return await conexion.delete(table, where: 'idPost = ?', whereArgs: [id]);
