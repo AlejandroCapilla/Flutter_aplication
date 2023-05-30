@@ -1,14 +1,7 @@
-import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screens/list_post_cloud_screen.dart';
-import 'package:flutter_demo/screens/list_post_screen.dart';
-import 'package:flutter_demo/settings/styles.dart';
 import 'package:flutter_demo/widgets/futures_modal.dart';
-import 'package:provider/provider.dart';
-import '../provider/flags_provider.dart';
-import '../provider/theme_provider.dart';
-import '../widgets/modal_add_post.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -22,8 +15,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeProvider theme = Provider.of<ThemeProvider>(context);
-    FlagsProvider flags = Provider.of<FlagsProvider>(context);
     final user = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(

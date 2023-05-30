@@ -31,13 +31,13 @@ class _ModalAddEventState extends State<ModalAddEvent> {
     return AlertDialog(
       title: const Text('Add Event'),
       content: SizedBox(
-        height: 170,
+        height: 130,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextFormField(
               controller: txtDescEvent,
-              maxLines: 5,
+              maxLines: 3,
             ),
             IconButton(
                 onPressed: () {
