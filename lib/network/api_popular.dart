@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class ApiPopular {
   final url =
-      'https://api.themoviedb.org/3/movie/popular?api_key=%3CYOUR_TOKEN%3E&language=es-MX&page=1';
+      'https://api.themoviedb.org/3/movie/popular?api_key=25e54d8eb5bd343a889f3772cf2117b8&language=es-MX&page=1';
 
   Future<List<PopularModel>?> getAllPopular() async {
     final response = await http.get(Uri.parse(url));
