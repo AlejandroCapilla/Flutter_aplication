@@ -6,10 +6,8 @@ import 'package:flutter_demo/provider/flags_provider.dart';
 import 'package:flutter_demo/provider/theme_provider.dart';
 import 'package:flutter_demo/routes.dart';
 import 'package:flutter_demo/screens/concentric_transition.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'screens/login_screen.dart';
 
 //AIzaSyC8pmLdrMOyeMW3yHPO6Li6jjsCf_O64WU  Api de mapas
 void main() async {
