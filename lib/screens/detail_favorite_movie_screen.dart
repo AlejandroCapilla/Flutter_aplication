@@ -1,21 +1,20 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/database/favorites_movie_helper.dart';
 import 'package:flutter_demo/models/actor_model.dart';
-import 'package:flutter_demo/models/favorite_movies_model.dart';
 import 'package:flutter_demo/models/popular_model.dart';
 import 'package:flutter_demo/network/api_popular.dart';
 import 'package:flutter_demo/widgets/card_actor.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class DetailMovieScreen extends StatefulWidget {
-  DetailMovieScreen({super.key});
+class DetailFavoriteMovieScreen extends StatefulWidget {
+  const DetailFavoriteMovieScreen({super.key});
 
   @override
-  State<DetailMovieScreen> createState() => _DetailMovieScreenState();
+  State<DetailFavoriteMovieScreen> createState() =>
+      _DetailFavoriteMovieScreenState();
 }
 
-class _DetailMovieScreenState extends State<DetailMovieScreen>
+class _DetailFavoriteMovieScreenState extends State<DetailFavoriteMovieScreen>
     with TickerProviderStateMixin {
   FavoriteMoviesDatabaseHelper? favoriteMovie;
   PopularModel? popularModel;
@@ -190,41 +189,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen>
                       Expanded(
                         child: Column(
                           children: [
-                            FadeTransition(
-                              opacity: _animationText,
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Material(
-                                    color: Colors.transparent,
-                                    child: IconButton(
-                                      icon: Icon(
-                                        esFavorita
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        color: Colors.pink,
-                                        size: 30,
-                                      ),
-                                      onPressed: () {
-                                        if (esFavorita) {
-                                          favoriteMovie!.ELIMINAR(
-                                              'tblMovie', popularModel!.id!);
-                                          listFavorites
-                                              .remove(popularModel!.id);
-                                        } else {
-                                          favoriteMovie!.INSERTAR('tblMovie', {
-                                            'idMovie': popularModel!.id,
-                                          });
-                                          listFavorites.add(popularModel!.id!);
-                                        }
-                                        setState(() {});
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            spaceHorizontal,
                             FadeTransition(
                               opacity: _animationText,
                               child: Text(

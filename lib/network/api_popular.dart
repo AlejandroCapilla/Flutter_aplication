@@ -20,6 +20,20 @@ class ApiPopular {
     }
   }
 
+  Future<List<PopularModel>?> getFavoriteMovies(List<int> movieIds) async {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var popular = jsonDecode(response.body)['results'] as List;
+      var listPopular = popular
+          .map((video) => PopularModel.fromMap(video))
+          .where((pop) => movieIds.contains(pop.id))
+          .toList();
+      return listPopular;
+    } else {
+      return null;
+    }
+  }
+
   Future<String> getIdVideo(int id_popular) async {
     Uri auxVideo = Uri.parse(
         'https://api.themoviedb.org/3/movie/$id_popular/videos?api_key=d7236b730825fb7b3c7e23e7d91e473c');

@@ -44,6 +44,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               leading: const Icon(Icons.movie),
               trailing: const Icon(Icons.chevron_right),
             ),
+            ListTile(
+              onTap: () => Navigator.pushNamed(context, '/favorite_movies'),
+              title: const Text('Favorite Movies'),
+              leading: const Icon(Icons.movie),
+              trailing: const Icon(Icons.chevron_right),
+            ),
             IconButton(
                 onPressed: () => Navigator.pushNamed(context, '/settings'),
                 icon: const Icon(Icons.settings)),
