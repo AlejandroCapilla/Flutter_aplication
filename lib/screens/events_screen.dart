@@ -199,9 +199,10 @@ class _EventsScreenState extends State<EventsScreen> {
                               ))
                           : ListView.builder(
                               shrinkWrap: true,
-                              itemCount: 30,
+                              itemCount: 40,
                               itemBuilder: (context, index) {
                                 final day = DateTime.now()
+                                    .subtract(const Duration(days: 15))
                                     .toUtc()
                                     .add(Duration(days: index));
                                 final fecha =
@@ -290,12 +291,56 @@ class _EventsScreenState extends State<EventsScreen> {
                                             onTap: () {
                                               showDialog(
                                                   context: context,
-                                                  builder: (context) =>
-                                                      AlertDialog(
-                                                        content: Text(event
-                                                            .dscEvento
-                                                            .toString()),
-                                                      ));
+                                                  builder:
+                                                      (context) => AlertDialog(
+                                                            content:
+                                                                ConstrainedBox(
+                                                              constraints:
+                                                                  BoxConstraints(
+                                                                      maxHeight:
+                                                                          150,
+                                                                      maxWidth:
+                                                                          200),
+                                                              child: Column(
+                                                                children: [
+                                                                  Text(
+                                                                    'Nombre: ' +
+                                                                        event
+                                                                            .dscEvento
+                                                                            .toString(),
+                                                                    style: const TextStyle(
+                                                                        fontSize:
+                                                                            24),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 20,
+                                                                  ),
+                                                                  Text(
+                                                                    'Fecha: ' +
+                                                                        DateFormat('yyyy-MM-dd')
+                                                                            .format(day),
+                                                                    style: const TextStyle(
+                                                                        fontSize:
+                                                                            18),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 20,
+                                                                  ),
+                                                                  event.completado
+                                                                      ? Text(
+                                                                          'Estado: Completado',
+                                                                          style:
+                                                                              const TextStyle(fontSize: 18),
+                                                                        )
+                                                                      : Text(
+                                                                          'Estado: Incompleto',
+                                                                          style:
+                                                                              const TextStyle(fontSize: 18),
+                                                                        )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ));
                                             },
                                           ),
                                         ),
